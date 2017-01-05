@@ -1,0 +1,22 @@
+.pageHeader{
+    color: white;
+    font-size: 2em;
+}
+.pageHeaderBackground{
+    background-color: green;
+}
+.contentShade{
+    background-color: #b3ffb3;
+    
+}
+.contentText{
+    text-decoration: underline;
+    color: black;
+    font-size: 1em;
+}
+.footerBackground{
+    background-color: #b3ffb3;
+}
+.footerText{
+    font-size: 1em;
+}

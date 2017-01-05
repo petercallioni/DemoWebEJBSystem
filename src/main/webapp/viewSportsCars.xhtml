@@ -1,0 +1,81 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <ui:composition template="layout.xhtml">
+        <ui:define name="title">View all Sports Cars</ui:define>
+
+        <ui:define name="pageName"> 
+            View All Sports Cars
+        </ui:define>
+        <ui:define name="content">
+            <h:panelGroup id="sportsCarList">
+                <h:dataTable id="carList" value="#{sportsCarControllerBean.findAllCars()}" var="scar" border="1">
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="ID "/>
+                        </f:facet>
+                        <h:outputText value="#{scar.id}"/>
+                    </h:column>
+
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Make"/>
+                        </f:facet>
+                        <h:outputText value="#{scar.make}"/>
+                    </h:column>
+
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Model "/>
+                        </f:facet>
+                        <h:outputText value="#{scar.model}"/>
+                    </h:column>
+
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Colour "/>
+                        </f:facet>
+                        <h:outputText value="#{scar.colour}"/>
+                    </h:column>
+
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Turbo Charger "/>
+                        </f:facet>
+                        <h:outputText value="#{scar.turboCharger}"/>
+                    </h:column>
+
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Sports Package "/>
+                        </f:facet>
+                        <h:outputText value="#{scar.sportsPackage}"/>
+                    </h:column>
+
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Launch Assist "/>
+                        </f:facet>
+                        <h:outputText value="#{scar.launchAssist}"/>
+                    </h:column>
+
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Delete"/>
+                        </f:facet>
+                        <h:form>
+                            <h:commandButton action="#{sportsCarControllerBean.deleteCar(scar.id)}">
+                                <f:ajax execute="@form" render="sportsCarList" />
+                            </h:commandButton>
+                        </h:form>
+
+                    </h:column>
+                </h:dataTable>
+            </h:panelGroup>
+
+        </ui:define>
+    </ui:composition>
+</html>
+

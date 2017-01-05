@@ -1,0 +1,48 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+    "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <ui:composition template="layout.xhtml">
+        <ui:define name="title">Menu</ui:define>
+        <ui:define name="pageName"> 
+            Main Menu
+        </ui:define>
+        <ui:define name="content">
+            <table>
+                <tr>
+                    <td>
+                <h:link styleClass="contentText" value="Create a customer" outcome="newCustomer.xhtml"/>
+                </td>
+                <td>
+                <h:link styleClass="contentText" value="View customers" outcome="viewCustomers.xhtml"/>
+                </td>
+                </tr>
+                <tr>
+                    <td>
+                <h:link styleClass="contentText" value="Create sports car" outcome="newSportsCar.xhtml"/>
+                </td>
+                <td>
+                <h:link styleClass="contentText" value="Create family car" outcome="newFamilyCar.xhtml"/>
+                </td>
+                <td>
+                <h:link styleClass="contentText" value="View sports cars" outcome="viewSportsCars.xhtml"/>
+                </td>
+                <td>
+                <h:link styleClass="contentText" value="View family cars" outcome="viewFamilyCars.xhtml"/>
+                </td>
+                </tr>
+                <tr>
+                    <td>
+                <h:link styleClass="contentText" value="New order" outcome="newEorder.xhtml"/>
+                </td>
+                <td>
+                <h:link styleClass="contentText" value="View orders" outcome="viewEorders.xhtml"/>
+                </td>
+                </tr>
+
+            </table>
+        </ui:define>
+    </ui:composition>
+</html>
+

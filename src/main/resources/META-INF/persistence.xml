@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="1.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd">
+    <persistence-unit name="assignment2PU" transaction-type="JTA">
+        <jta-data-source>jdbc/assignment2DS</jta-data-source>
+        <class>com.callioni.entites.Car</class>
+        <class>com.callioni.entites.Customer</class>
+        <class>com.callioni.entites.EOrder</class>
+        <class>com.callioni.entites.FamilyCar</class>
+        <class>com.callioni.entites.Order_Line</class>
+        <class>com.callioni.entites.SportsCar</class>
+        <properties>
+            <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
+            <property name="javax.persistence.jdbc.driver" value="org.apache.derby.jdbc.ClientDriver"/>
+            <property name="javax.persistance.jdbc.url" value="jdbc:derby://localhost:1527/assignment2DB"/>
+            <property name="javax.persistance.jdbc.user" value="APP"/>
+            <property name="javax.persistance.jdbc.password" value="APP"/>
+            <property name="javax.persistance.jdbc.level" value="INFO"/>
+      
+        </properties>
+    </persistence-unit>
+</persistence>
