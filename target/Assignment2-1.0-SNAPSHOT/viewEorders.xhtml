@@ -1,0 +1,103 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <ui:composition template="layout.xhtml">
+        <ui:define name="title">View all Orders</ui:define>
+
+        <ui:define name="pageName"> 
+            View All Orders
+        </ui:define>
+
+        <ui:define name="content">
+            <table>
+                <tr>
+                    <td>
+                        <b>Orders</b>
+                        <h:panelGroup id="orderParentList">
+                            <h:dataTable id="orderList" value="#{eorderControllerBean.findAllOrders()}" var="order" border="1">
+                                <h:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="ID (Click to show order lines)"/>
+                                    </f:facet>
+                                    <h:form>
+                                        <h:commandButton value="#{order.id}" action="#{pageController.setShowOrderLines(order.id)}">
+                                            <f:ajax execute="@form" render="orderClickedList " />
+                                        </h:commandButton>
+                                    </h:form>
+
+                                </h:column>
+
+                                <h:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Customer ID"/>
+                                    </f:facet>
+                                    <h:outputText value="#{order.customer.id}"/>
+                                </h:column>
+
+                                <h:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Date of Purchase"/>
+                                    </f:facet>
+                                    <h:outputText value="#{order.dateOfPurchase}">
+                                        <f:convertDateTime pattern="yyyy MM dd" />
+                                    </h:outputText>
+                                </h:column>
+
+                                <h:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Delete"/>
+                                    </f:facet>
+                                    <h:form>
+                                        <h:commandButton action="#{eorderControllerBean.deleteOrder(order.id)}">
+                                            <f:ajax execute="@form" render="orderParentList orderClickedList" />
+                                        </h:commandButton>
+                                    </h:form>
+
+                                </h:column>
+                            </h:dataTable>
+                        </h:panelGroup>
+
+                    </td>
+                    <td>
+                        <b>Order Lines</b>
+                        <h:panelGroup id="orderClickedList">
+                            <h:dataTable id="orderLineList" value="#{eorderControllerBean.findOrderLineById(pageController.showOrderLines)}" var="order" border="1">
+                                <h:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Order ID"/>
+                                    </f:facet>
+                                    <h:outputText value="#{order.eorder.id}"/>
+                                </h:column>
+
+                                <h:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Car ID"/>
+                                    </f:facet>
+                                    <h:outputText value="#{order.car.id}"/>
+                                </h:column>
+
+                                <h:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Price"/>
+                                    </f:facet>
+                                    <h:outputText value="$#{order.price}"/>
+                                </h:column>
+
+                                <h:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Quantity"/>
+                                    </f:facet>
+                                    <h:outputText value="#{order.quantity}"/>
+                                </h:column>
+               
+                            </h:dataTable>
+                        </h:panelGroup>
+                    </td>
+                </tr>
+            </table>
+        </ui:define>
+    </ui:composition>
+</html>
+

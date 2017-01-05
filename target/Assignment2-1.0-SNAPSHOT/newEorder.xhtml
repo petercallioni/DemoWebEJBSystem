@@ -1,0 +1,308 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <ui:composition template="layout.xhtml">
+
+        <ui:define name="title">Create a new Order</ui:define>
+
+         <ui:define name="pageName"> 
+            New Order
+        </ui:define>
+        
+        <ui:define name="content">
+            <table>
+                <tr>
+                    <td>
+                        <h:form id="order">
+                            <h:panelGrid columns="2">
+                                <h:outputLabel value="Customer ID : "/>
+                                <h:inputText id="inputCustomer" binding="#{custId}" required="true"/>
+
+                                <h:outputLabel value ="Date of purchase (yyyy MM dd):"/>
+                                <h:inputText validatorMessage="Must be in YYYY MM DD format" binding="#{date}" required="true">
+                                    <f:convertDateTime pattern="yyyy MM dd" />
+                                </h:inputText>
+                                
+                                <h:outputLabel value="Car ID : "/>
+                                <h:inputText binding="#{orderCarId}" required="true"/>
+
+                                <h:outputLabel value="Price ($): "/>
+                                <h:inputText binding="#{orderPice}" required="true"/>
+
+                                <h:outputLabel value ="Quantity :"/>
+                                <h:inputText binding="#{orderQuantity}" required="true"/>
+                            </h:panelGrid>
+                            <h:commandButton value="Create a new order" action="#{eorderControllerBean.createOrder(custId.value, date.value, orderCarId.value, orderPice.value, orderQuantity.value)}">
+                            </h:commandButton>
+                        </h:form>
+
+                        <table>
+                            <tr>
+                                <td>
+                                    <h:link value="Go Back" outcome="index"/>
+                                </td>
+                                <td>
+                                    <h:link value="View List" outcome="viewEorders"/>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td>
+                        <h:panelGroup id="customerList">
+                            <h:form rendered = "#{not pageController.showCust}">
+                                <h:commandButton value="Show Customers" action="#{pageController.setShowCust(true)}">
+                                    <f:ajax execute="@form" render=":customerList" />
+                                </h:commandButton>
+                            </h:form>
+
+                            <h:form rendered = "#{pageController.showCust}">
+                                <h:commandButton value="Hide Customers" action="#{pageController.setShowCust(false)}">
+                                    <f:ajax execute="@form" render=":customerList" />
+                                </h:commandButton>
+                            </h:form>
+
+                            <h:dataTable rendered ="#{pageController.showCust}" value="#{customerController.findAllCustomers()}" var="customer" border="1">
+
+                                <h:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="ID "/>
+                                    </f:facet>
+                                    <h:outputText value="#{customer.id}"/>
+                                </h:column>
+
+                                <h:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="First Name"/>
+                                    </f:facet>
+                                    <h:outputText value="#{customer.firstName}"/>
+                                </h:column>
+
+                                <h:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Last Name"/>
+                                    </f:facet>
+                                    <h:outputText value="#{customer.lastName}"/>
+                                </h:column>
+
+                                <h:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Phone No."/>
+                                    </f:facet>
+                                    <h:outputText value="#{customer.phone}"/>
+                                </h:column>
+
+                                <h:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Post Code"/>
+                                    </f:facet>
+                                    <h:outputText value="#{customer.postCode}"/>
+                                </h:column>
+
+                                <h:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Email"/>
+                                    </f:facet>
+                                    <h:outputText value="#{customer.email}"/>
+                                </h:column>
+
+                                <h:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Address"/>
+                                    </f:facet>
+                                    <h:outputText value="#{customer.address}"/>
+                                </h:column>
+                            </h:dataTable>
+                        </h:panelGroup>
+                    </td>
+                    <td>
+                        <h:panelGroup id="orderList">
+                            <h:form rendered = "#{not pageController.showOrders}">
+                                <h:commandButton value="Show Orders" action="#{pageController.setShowOrders(true)}">
+                                    <f:ajax execute="@form" render=":orderList" />
+                                </h:commandButton>
+                            </h:form>
+
+                            <h:form rendered = "#{pageController.showOrders}">
+                                <h:commandButton value="Hide Orders" action="#{pageController.setShowOrders(false)}">
+                                    <f:ajax execute="@form" render=":orderList" />
+                                </h:commandButton>
+                            </h:form>
+
+                            <h:dataTable rendered ="#{pageController.showOrders}" value="#{eorderControllerBean.findAllOrders()}" var="order" border="1">
+                                <h:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="ID"/>
+                                    </f:facet>
+                                    <h:outputText value="#{order.id}"/>
+                                </h:column>
+
+                                <h:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Customer ID"/>
+                                    </f:facet>
+                                    <h:outputText value="#{order.customer.id}"/>
+                                </h:column>
+
+                                <h:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Date of Purchase"/>
+                                    </f:facet>
+                                    <h:outputText value="#{order.dateOfPurchase}">
+                                        <f:convertDateTime pattern="yyyy MM dd" />
+                                    </h:outputText>
+                                </h:column>
+                            </h:dataTable>
+                        </h:panelGroup>
+                    </td>
+                    <td>
+                        <h:panelGroup id="carList">
+                            <h:form rendered = "#{not pageController.showCars}">
+                                <h:commandButton value="Show Cars" action="#{pageController.setShowCars(true)}">
+                                    <f:ajax execute="@form" render=":carList" />
+                                </h:commandButton>
+                            </h:form>
+
+                            <h:form rendered = "#{pageController.showCars}">
+                                <h:commandButton value="Hide Cars" action="#{pageController.setShowCars(false)}">
+                                    <f:ajax execute="@form" render=":carList " />
+                                </h:commandButton>
+                            </h:form>
+
+                            <h:panelGroup rendered ="#{pageController.showCars}">
+                                <b > Sports Cars</b>
+                            </h:panelGroup>
+                            <h:dataTable  rendered ="#{pageController.showCars}" value="#{sportsCarControllerBean.findAllCars()}" var="scar" border="1">
+                                <h:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="ID "/>
+                                    </f:facet>
+                                    <h:outputText value="#{scar.id}"/>
+                                </h:column>
+
+                                <h:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Make"/>
+                                    </f:facet>
+                                    <h:outputText value="#{scar.make}"/>
+                                </h:column>
+
+                                <h:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Model "/>
+                                    </f:facet>
+                                    <h:outputText value="#{scar.model}"/>
+                                </h:column>
+
+                                <h:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Colour "/>
+                                    </f:facet>
+                                    <h:outputText value="#{scar.colour}"/>
+                                </h:column>
+
+                                <h:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Turbo Charger "/>
+                                    </f:facet>
+                                    <h:outputText value="#{scar.turboCharger}"/>
+                                </h:column>
+
+                                <h:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Sports Package "/>
+                                    </f:facet>
+                                    <h:outputText value="#{scar.sportsPackage}"/>
+                                </h:column>
+
+                                <h:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Launch Assist "/>
+                                    </f:facet>
+                                    <h:outputText value="#{scar.launchAssist}"/>
+                                </h:column>
+                            </h:dataTable>
+
+                            <h:panelGroup rendered ="#{pageController.showCars}">
+                                <b > Family Cars</b>
+                            </h:panelGroup> 
+
+                            <h:dataTable rendered ="#{pageController.showCars}" value="#{familyCarControllerBean.findAllCars()}" var="fcar" border="1">
+                                <h:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="ID "/>
+                                    </f:facet>
+                                    <h:outputText value="#{fcar.id}"/>
+                                </h:column>
+
+                                <h:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Make"/>
+                                    </f:facet>
+                                    <h:outputText value="#{fcar.make}"/>
+                                </h:column>
+
+                                <h:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Model "/>
+                                    </f:facet>
+                                    <h:outputText value="#{fcar.model}"/>
+                                </h:column>
+
+                                <h:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Colour "/>
+                                    </f:facet>
+                                    <h:outputText value="#{fcar.colour}"/>
+                                </h:column>
+
+                                <h:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Air Con "/>
+                                    </f:facet>
+                                    <h:outputText value="#{fcar.airCon}"/>
+                                </h:column>
+
+                                <h:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="GPS "/>
+                                    </f:facet>
+                                    <h:outputText value="#{fcar.gps}"/>
+                                </h:column>
+
+                                <h:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Sun Roof "/>
+                                    </f:facet>
+                                    <h:outputText value="#{fcar.sunRoof}"/>
+                                </h:column>
+                            </h:dataTable>
+                        </h:panelGroup>
+                    </td>
+                </tr>
+                <tr>
+                    <h:form id="orderLine">
+
+                        <h:panelGrid columns="2">
+                            <h:outputLabel value="Order ID : "/>
+                            <h:inputText binding="#{orderID}"/>
+
+                            <h:outputLabel value="Car ID : "/>
+                            <h:inputText binding="#{carID}"/>
+
+                            <h:outputLabel value="Price ($): "/>
+                            <h:inputText binding="#{price}"/>
+
+                            <h:outputLabel value ="Quantity :"/>
+                            <h:inputText binding="#{quantity}"/>
+                        </h:panelGrid>
+                        <h:commandButton value="Add a order line to an existing order" action="#{eorderControllerBean.createOrderLine(orderID.value, carID.value, price.value, quantity.value)}">
+                        </h:commandButton>
+                    </h:form>
+                </tr> 
+            </table>
+        </ui:define>
+    </ui:composition>
+</html>
+
